@@ -18,6 +18,7 @@ jobs:
         os:
         - macos-15
         - ubuntu-20.04
+        - windows-latest
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
@@ -30,9 +31,10 @@ jobs:
         fetch-depth: 0
         submodules: recursive
     - name: Install sha512sum
-      if: startswith(matrix.os, 'macos')
+      if: runner.os == 'macOS'
       run: brew install coreutils
     - name: Build lima tarballs
+      shell: bash
       env:
         OS: ${{ matrix.os }}
       run: |
