@@ -23,6 +23,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
+    - name: Force LF line endings in git checkout
+      if: runner.os == 'Windows'
+      run: |
+        git config --system core.autocrlf false
+        git config --system core.eol lf
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
